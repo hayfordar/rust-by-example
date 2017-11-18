@@ -1,0 +1,1 @@
+{"rustc":12342400666247092573,"features":"[]","target":8033441890325155486,"profile":731176819336294830,"deps":[["rand v0.3.18",5225105118531058742]],"local":{"MtimeBased":[[1511035102,526402183],"/home/six/Documents/Projects/rust-by-example/two/guess/target/debug/.fingerprint/guess-e2ad9f7b0e5a37be/dep-bin-guess-e2ad9f7b0e5a37be"]},"rustflags":[]}
