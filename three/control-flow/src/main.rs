@@ -25,4 +25,18 @@ fn main() {
         println!("yuh");
         x = x - 1;
     }
+
+    let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"
+        , "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    for month in months.iter() {
+        println!("{:?}", month);
+    }
+
+    /* use of ranges */
+    for n in 0..10 {
+        println!("{:?}", n);
+    }
+
+
 }
