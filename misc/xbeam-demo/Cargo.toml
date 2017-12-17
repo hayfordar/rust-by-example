@@ -1,0 +1,7 @@
+[package]
+name = "xbeam-demo"
+version = "0.1.0"
+authors = ["Andrew Hayford <emailandrewhayford@gmail.com>"]
+
+[dependencies]
+crossbeam = "0.3.0"
