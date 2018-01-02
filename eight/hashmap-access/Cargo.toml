@@ -1,0 +1,6 @@
+[package]
+name = "hashmap-access"
+version = "0.1.0"
+authors = ["Andrew Hayford <emailandrewhayford@gmail.com>"]
+
+[dependencies]
