@@ -1,4 +1,5 @@
 struct Df<'a> {
+    // reference to samples will exist as long as the parent struct exists
     samples : &'a mut [f32]
 }
 
@@ -11,6 +12,18 @@ fn larger<'a>(vec1 : &'a [f32], vec2 : &'a [f32]) -> &'a [f32] {
         vec2
     }
 }
+
+// This function will not compile, because the definition includes the return of
+// a borrowed value. With no lifetime, the return value could theoretically reference
+// a value that no longer exists
+//
+// fn larger_no_lifetime(vec1 : & [f32], vec2 : & [f32]) -> & [f32] {
+//     if vec1.len() > vec2.len() {
+//         vec1
+//     } else {
+//         vec2
+//     }
+// }
 
 fn main() {
     let vec1 : Vec<f32> = vec![1.0, 2.0, 3.0];
@@ -34,4 +47,6 @@ fn main() {
     println!("{:?}", vec2);
     vec2.push(6.0);
     println!("{:?}", vec2);
+
+    // println!("{:?}", larger_no_lifetime(vec1, vec2));
 }
