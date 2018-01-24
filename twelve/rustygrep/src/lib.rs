@@ -44,7 +44,54 @@ pub fn run(config : &Config) -> Result<(), Box<Error>> {
     let mut file = Config::open_file(&config.filename)?;
     file.read_to_string(&mut contents)?;
 
-    println!("{:?}", contents);
+    for line in search(&config.pattern, &contents) {
+        println!("{}", line);
+    }
 
     Ok(())
+}
+
+pub fn search<'a>(query : &str, content : &'a str) -> Vec<&'a str> {
+    let mut results : Vec<&str> = Vec::new();
+
+    for line in content.lines() {
+        if line.contains(query) {
+            results.push(line);
+        }
+    }
+
+    results
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn single_match() {
+        let query = "six";
+        let content = "\
+I don't mean to intimidate you
+but my high score
+is six.";
+        assert_eq!(vec!["is six."]
+            , search(query, content));
+    }
+
+    #[test]
+    fn multiple_match() {
+        let query = "he ";
+        let content = "\
+villain man never ran with krills in his hand
+and, won't stop rockin til he clocked in a gazillion grand,
+tillin the wasteland sands,
+raps on backs of treasure maps, stacks to the ceiling fan
+he rest when he's ashes
+ask him after ten miles in his goulashes, smashes stashes";
+        assert_eq!(vec!["and, won't stop rockin til he clocked in a gazillion grand,"
+            , "tillin the wasteland sands,"
+            , "raps on backs of treasure maps, stacks to the ceiling fan"
+            , "he rest when he's ashes"],
+            search(&query, &content));
+    }
 }

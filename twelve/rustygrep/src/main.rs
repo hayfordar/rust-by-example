@@ -15,5 +15,12 @@ fn main() {
         }
     };
 
-    println!("filename: {:?}, pattern: {:?}", conf.filename, conf.pattern);
+    match rustygrep::run(&conf) {
+        Ok(val) => {
+            println!("Woo!");
+        },
+        Err(err) => {
+            println!("Error in search");
+        }
+    };
 }
