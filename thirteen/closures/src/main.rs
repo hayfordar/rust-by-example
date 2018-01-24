@@ -2,7 +2,7 @@ use std::thread;
 use std::time::Duration;
 
 struct Cacher<T, U>
-    where T : Fn(&U, &U) -> U,
+    where T : Fn(&U) -> U,
     U : Copy + PartialOrd
 {
     calculation : T,
@@ -10,7 +10,7 @@ struct Cacher<T, U>
 }
 
 impl<T, U> Cacher<T, U>
-    where T : Fn(&U, &U) -> U,
+    where T : Fn(&U) -> U,
     U : Copy + PartialOrd
 {
     fn new(calculation : T) -> Cacher<T, U> {
@@ -20,11 +20,11 @@ impl<T, U> Cacher<T, U>
         }
     }
 
-    fn eval(&mut self, arg1 : &U, arg2 : &U) -> U {
+    fn eval(&mut self, arg1 : &U) -> U {
         match self.value {
             Some(val) => val,
             None => {
-                let val = (self.calculation)(&arg1, &arg2);
+                let val = (self.calculation)(&arg1);
                 self.value = Some(val);
                 val
             }
@@ -60,7 +60,7 @@ fn do_some_maths(mass : &f64, momentum : &f64) -> f64 {
     //     m * c * c
     // }
 
-    let mut cacher = Cacher::new(|m : &f64, c : &f64| {
+    let mut cacher = Cacher::new(|m : &f64| {
         println!("Slowly computing results . . .");
         println!("{:?} {:?}", c, m);
         thread::sleep(Duration::from_secs(2));
@@ -80,7 +80,7 @@ fn do_some_maths(mass : &f64, momentum : &f64) -> f64 {
         },
         false => {
             println!("Momentum is not normal, calling an expensive calculation:");
-            cacher.eval(&mass, &c)
+            cacher.eval(&mass)
         }
     }
 }
